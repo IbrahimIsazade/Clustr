@@ -1,0 +1,10 @@
+services:
+  clustr:
+    build: .
+    ports:
+      - "127.0.0.1:5080:8080"
+    volumes:
+      - clustr-data:/data
+    restart: unless-stopped
+volumes:
+  clustr-data:

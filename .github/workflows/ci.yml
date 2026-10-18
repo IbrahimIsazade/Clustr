@@ -1,0 +1,17 @@
+name: Clustr checks
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - run: dotnet restore Clustr.slnx
+      - run: dotnet test tests/Clustr.Tests/Clustr.Tests.csproj --no-restore --configuration Release
+      - run: dotnet publish src/Clustr/Clustr.csproj --no-restore --configuration Release --output artifacts/app
+      - uses: actions/upload-artifact@v4
+        with:
+          name: clustr-app
+          path: artifacts/app
